@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAIMANA AI | Infrastructure Project Early Warning & Decision Support System</title>
+  <meta name="description" content="AI-assisted infrastructure project monitoring and risk decision support system for Government of India / MoSPI.">
+  <!-- Google Fonts: Inter & Noto Sans Devanagari -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <!-- Chart.js for clean, institutional flat charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+
+  <!-- Indian Tricolor Accent Strip -->
+  <div class="tricolor-strip">
+    <div class="tc-saffron"></div>
+    <div class="tc-white"></div>
+    <div class="tc-green"></div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="gov-header">
+    <div class="gov-branding-left">
+      <!-- Official Emblem Seal -->
+      <div class="gov-emblem-seal" title="State Emblem of India">
+        <svg viewBox="0 0 100 115" width="48" height="55" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer circular/pillar aesthetic -->
+          <!-- Lions Head & Mane (Ashoka Lion Capital Crest) -->
+          <path d="M50 12 C44 12 39 16 39 22 C39 26 42 29 45 31 C43 33 41 37 41 41 C41 47 45 52 50 52 C55 52 59 47 59 41 C59 37 57 33 55 31 C58 29 61 26 61 22 C61 16 56 12 50 12 Z" fill="url(#goldGrad)" stroke="#78350f" stroke-width="1.2"/>
+          <!-- Left Lion profile -->
+          <path d="M38 24 C33 22 27 25 26 31 C25 36 28 41 33 43 C31 46 31 51 34 55 C37 58 42 60 46 58 C44 54 43 49 44 45 C39 44 37 38 38 33 C39 29 41 26 43 24 Z" fill="url(#goldGrad)" stroke="#78350f" stroke-width="1"/>
+          <!-- Right Lion profile -->
+          <path d="M62 24 C67 22 73 25 74 31 C75 36 72 41 67 43 C69 46 69 51 66 55 C63 58 58 60 54 58 C56 54 57 49 56 45 C61 44 63 38 62 33 C61 29 59 26 57 24 Z" fill="url(#goldGrad)" stroke="#78350f" stroke-width="1"/>
+          <!-- Central Chest & Mane details -->
+          <path d="M46 34 Q50 37 54 34 Q57 43 50 49 Q43 43 46 34 Z" fill="#b45309" opacity="0.4"/>
+          <!-- Crown & Forehead Features -->
+          <circle cx="50" cy="22" r="3" fill="#78350f"/>
+          <circle cx="45" cy="26" r="1.5" fill="#78350f"/>
+          <circle cx="55" cy="26" r="1.5" fill="#78350f"/>
+          <circle cx="32" cy="32" r="1.5" fill="#78350f"/>
+          <circle cx="68" cy="32" r="1.5" fill="#78350f"/>
+          <!-- Abacus / Platform -->
+          <rect x="20" y="62" width="60" height="9" rx="2" fill="url(#goldGrad)" stroke="#78350f" stroke-width="1.2"/>
+          <!-- Ashoka Chakra (Dharma Wheel) in Center of Abacus -->
+          <circle cx="50" cy="66.5" r="4" stroke="#1e3a8a" stroke-width="1" fill="#ffffff"/>
+          <circle cx="50" cy="66.5" r="1.2" fill="#1e3a8a"/>
+          <!-- Chakra Spokes -->
+          <line x1="50" y1="62.5" x2="50" y2="70.5" stroke="#1e3a8a" stroke-width="0.6"/>
+          <line x1="46" y1="66.5" x2="54" y2="66.5" stroke="#1e3a8a" stroke-width="0.6"/>
+          <line x1="47.2" y1="63.7" x2="52.8" y2="69.3" stroke="#1e3a8a" stroke-width="0.6"/>
+          <line x1="52.8" y1="63.7" x2="47.2" y2="69.3" stroke="#1e3a8a" stroke-width="0.6"/>
+          <!-- Flanking Animals (Bull left, Horse right simplified motifs) -->
+          <path d="M28 65 Q32 63 35 67" stroke="#78350f" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M72 65 Q68 63 65 67" stroke="#78350f" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- Lotus Base / Pedestal -->
+          <path d="M25 71 Q50 78 75 71 L72 82 Q50 86 28 82 Z" fill="url(#goldGrad)" stroke="#78350f" stroke-width="1"/>
+          <!-- Lotus Petal striations -->
+          <path d="M42 74 Q50 78 50 84" stroke="#78350f" stroke-width="0.8"/>
+          <path d="M58 74 Q50 78 50 84" stroke="#78350f" stroke-width="0.8"/>
+          <path d="M34 73 Q40 76 41 83" stroke="#78350f" stroke-width="0.8"/>
+          <path d="M66 73 Q60 76 59 83" stroke="#78350f" stroke-width="0.8"/>
+          <!-- Base plinth -->
+          <rect x="22" y="83" width="56" height="5" rx="1.5" fill="#92400e"/>
+          <!-- Inscription Banner "सत्यमेव जयते" -->
+          <rect x="16" y="91" width="68" height="13" rx="2" fill="#fffbeb" stroke="#b45309" stroke-width="0.8"/>
+          <text x="50" y="100.5" font-family="'Noto Sans Devanagari', 'Segoe UI', serif" font-size="7.5" font-weight="700" fill="#78350f" text-anchor="middle" letter-spacing="0.3">सत्यमेव जयते</text>
+          
+          <!-- Gold Gradient Definition -->
+          <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fef08a"/>
+              <stop offset="35%" stop-color="#f59e0b"/>
+              <stop offset="70%" stop-color="#d97706"/>
+              <stop offset="100%" stop-color="#b45309"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="gov-titles">
+        <div class="gov-india-text">
+          <span class="hindi-text">भारत सरकार</span>
+          <span class="title-dot">•</span>
+          <span class="eng-text">GOVERNMENT OF INDIA</span>
+        </div>
+        <div class="gov-ministry-text">
+          Ministry of Statistics and Programme Implementation
+        </div>
+        <div class="paimana-app-title">
+          <span class="brand-name">PAIMANA</span>
+          <span class="ai-pill">AI</span>
+          <span class="brand-divider">|</span>
+          <span class="paimana-tagline">Infrastructure Project Risk & Early Warning System</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="gov-header-right">
+      <div class="philosophy-badge" title="Decision-Support Analytical Workflow">
+        <span class="philo-label">CORE WORKFLOW:</span>
+        <span class="philo-steps">Predict ➔ Explain ➔ Prioritize ➔ Recommend</span>
+      </div>
+      <button class="btn-header" id="btn-quick-new-project">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Manual Project</span>
+      </button>
+      <button class="btn-header" id="btn-reset-demo" title="Reset dataset to default 40+ demo records">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+        <span>Reset Demo</span>
+      </button>
+      <button class="btn-header btn-header-primary" id="btn-export-reports">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <span>Export Data</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Horizontal Navigation Bar -->
+  <nav class="gov-nav-bar" id="gov-nav">
+    <button class="nav-tab-btn active" data-target="view-dashboard">Dashboard</button>
+    <button class="nav-tab-btn" data-target="view-projects">Project Explorer</button>
+    <button class="nav-tab-btn" data-target="view-warnings">
+      Early Warning Center <span class="nav-badge" id="nav-warning-badge">0</span>
+    </button>
+    <button class="nav-tab-btn" data-target="view-anomalies">
+      Anomalies <span class="nav-badge" id="nav-anomaly-badge" style="background:#4f46e5;">0</span>
+    </button>
+    <button class="nav-tab-btn" data-target="view-analytics">Analytics & Comparisons</button>
+    <button class="nav-tab-btn" data-target="view-assistant">PAIMANA AI Assistant</button>
+    <button class="nav-tab-btn" data-target="view-upload">Data Ingestion (CSV / XLSX)</button>
+  </nav>
+
+  <!-- Main Content Body -->
+  <main class="gov-main-content">
+
+    <!-- ========================================================
+         VIEW 1: DASHBOARD
+         ======================================================== -->
+    <section id="view-dashboard" class="tab-view active">
+      <div class="page-section-header">
+        <div>
+          <h1 class="page-section-title">Infrastructure Portfolio Risk Dashboard</h1>
+          <p class="page-section-subtitle">Real-time analytical risk scoring, early warning detection, and decision-support triage.</p>
+        </div>
+        <div>
+          <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">
+            Monitoring Snapshot Date: <strong>September 2026</strong>
+          </span>
+        </div>
+      </div>
+
+      <!-- Top KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Projects</div>
+          <div class="kpi-value" id="kpi-total-projects">-</div>
+          <div class="kpi-subtext" id="kpi-cost-monitored">Sanctioned: ₹0 Cr</div>
+        </div>
+        <div class="kpi-card kpi-crit">
+          <div class="kpi-label">Critical Risk (81–100)</div>
+          <div class="kpi-value" id="kpi-crit-projects" style="color: var(--risk-crit);">-</div>
+          <div class="kpi-subtext">Immediate intervention needed</div>
+        </div>
+        <div class="kpi-card kpi-high">
+          <div class="kpi-label">High Risk (61–80)</div>
+          <div class="kpi-value" id="kpi-high-projects" style="color: var(--risk-high);">-</div>
+          <div class="kpi-subtext">Elevated schedule/cost pressure</div>
+        </div>
+        <div class="kpi-card kpi-warn">
+          <div class="kpi-label">Active Early Warnings</div>
+          <div class="kpi-value" id="kpi-total-warnings" style="color: var(--risk-med);">-</div>
+          <div class="kpi-subtext">Automated condition triggers</div>
+        </div>
+        <div class="kpi-card kpi-anom">
+          <div class="kpi-label">Anomalies Detected</div>
+          <div class="kpi-value" id="kpi-total-anomalies" style="color: #4f46e5;">-</div>
+          <div class="kpi-subtext">Statistical pattern outliers</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Average Risk Score</div>
+          <div class="kpi-value" id="kpi-avg-risk">-</div>
+          <div class="kpi-subtext">Portfolio-wide benchmark</div>
+        </div>
+      </div>
+
+      <!-- Row 1: Priority Requiring Attention & Risk Distribution -->
+      <div class="dashboard-row-2col">
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Projects Requiring Attention (Priority Queue)</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Prototype Prioritization Algorithm</span>
+          </div>
+          <div class="gov-panel-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="gov-table" id="table-attention-queue">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">Rank</th>
+                    <th>Project Name & ID</th>
+                    <th>Ministry</th>
+                    <th>Sector</th>
+                    <th style="text-align: right;">Cost (₹ Cr)</th>
+                    <th>Risk Category</th>
+                    <th style="text-align: right;">Risk Score</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Portfolio Risk Distribution</span>
+            <span style="font-size: 11px; color: var(--text-muted);">0-30 Low, 31-60 Med, 61-80 High, 81-100 Crit</span>
+          </div>
+          <div class="gov-panel-body" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="height: 220px; width: 100%;">
+              <canvas id="chart-risk-distribution"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Risk by Sector & State-wise Risk -->
+      <div class="dashboard-row-equal">
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Average Risk by Sector</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Sectoral Risk Pressure</span>
+          </div>
+          <div class="gov-panel-body">
+            <div style="height: 250px;">
+              <canvas id="chart-sector-risk"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">State-Wise Project Risk Profile</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Geographical Concentration</span>
+          </div>
+          <div class="gov-panel-body" style="padding: 0;">
+            <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+              <table class="gov-table" id="table-state-risk">
+                <thead>
+                  <tr>
+                    <th>State / UT</th>
+                    <th style="text-align: center;">Projects</th>
+                    <th style="text-align: center;">Average Risk Score</th>
+                    <th>Risk Band</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Cost vs Physical Progress & Recent Warnings -->
+      <div class="dashboard-row-equal">
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Cost vs Physical Progress Relationship</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Delivery Trajectory</span>
+          </div>
+          <div class="gov-panel-body">
+            <div style="height: 240px;">
+              <canvas id="chart-cost-vs-progress"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Recent Critical Early Warnings</span>
+            <button class="btn btn-outline" style="padding: 2px 8px; font-size: 11px;" id="btn-goto-warnings">View All Warnings</button>
+          </div>
+          <div class="gov-panel-body" style="padding: 0;">
+            <div class="table-responsive" style="max-height: 240px; overflow-y: auto;">
+              <table class="gov-table" id="table-recent-warnings">
+                <thead>
+                  <tr>
+                    <th>Project</th>
+                    <th>Warning Trigger</th>
+                    <th>Severity</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 2: PROJECT EXPLORER
+         ======================================================== -->
+    <section id="view-projects" class="tab-view" style="display: none;">
+      <div class="page-section-header">
+        <div>
+          <h1 class="page-section-title">Infrastructure Project Explorer</h1>
+          <p class="page-section-subtitle">Search, filter, and inspect multi-dimensional risk scores across all monitored projects.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline" id="btn-export-projects-csv">⬇ Export CSV</button>
+          <button class="btn btn-outline" id="btn-export-projects-xlsx">⬇ Export XLSX</button>
+        </div>
+      </div>
+
+      <!-- Filter Controls Bar -->
+      <div class="filter-bar">
+        <div class="filter-group" style="flex: 2; min-width: 200px;">
+          <label class="filter-label">Search Project Name or ID</label>
+          <input type="text" class="form-control" id="filter-search" placeholder="Type project keyword, state, sector...">
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Ministry</label>
+          <select class="form-control" id="filter-ministry">
+            <option value="All">All Ministries</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Sector</label>
+          <select class="form-control" id="filter-sector">
+            <option value="All">All Sectors</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">State</label>
+          <select class="form-control" id="filter-state">
+            <option value="All">All States</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Risk Category</label>
+          <select class="form-control" id="filter-risk">
+            <option value="All">All Risk Levels</option>
+            <option value="Critical">Critical (81–100)</option>
+            <option value="High">High (61–80)</option>
+            <option value="Medium">Medium (31–60)</option>
+            <option value="Low">Low (0–30)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Sort By</label>
+          <select class="form-control" id="filter-sort">
+            <option value="priority_rank">Priority Attention Rank</option>
+            <option value="risk_score_desc">Risk Score (Highest First)</option>
+            <option value="risk_score_asc">Risk Score (Lowest First)</option>
+            <option value="cost_desc">Cost (Largest First)</option>
+            <option value="progress_asc">Physical Progress (Lowest First)</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 6px; align-items: flex-end;">
+          <button class="btn btn-secondary" id="btn-reset-filters">Reset Filters</button>
+        </div>
+      </div>
+
+      <!-- Projects Master Table -->
+      <div class="gov-panel">
+        <div class="gov-panel-body" style="padding: 0;">
+          <div class="table-responsive">
+            <table class="gov-table" id="table-project-explorer">
+              <thead>
+                <tr>
+                  <th>Project ID</th>
+                  <th>Project Name</th>
+                  <th>Ministry</th>
+                  <th>Sector</th>
+                  <th>State</th>
+                  <th style="text-align: right;">Sanctioned Cost (₹ Cr)</th>
+                  <th style="text-align: right;">Expenditure (₹ Cr)</th>
+                  <th style="text-align: center;">Physical Progress</th>
+                  <th style="text-align: center;">Risk Score</th>
+                  <th style="text-align: center;">Risk Level</th>
+                  <th style="text-align: center;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 3: EARLY WARNING CENTER
+         ======================================================== -->
+    <section id="view-warnings" class="tab-view" style="display: none;">
+      <div class="page-section-header">
+        <div>
+          <h1 class="page-section-title">Early Warning Monitoring Center</h1>
+          <p class="page-section-subtitle">Automated early warning signals triggered by rule-based risk condition thresholds.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline filter-warn-btn active" data-sev="All">All Warnings</button>
+          <button class="btn btn-outline filter-warn-btn" data-sev="Critical">Critical</button>
+          <button class="btn btn-outline filter-warn-btn" data-sev="High">High</button>
+          <button class="btn btn-outline filter-warn-btn" data-sev="Medium">Medium</button>
+        </div>
+      </div>
+
+      <div class="gov-alert gov-alert-info">
+        <div class="gov-alert-title">Operational Early Warning Protocol</div>
+        Early warnings alert project monitoring officers to emerging bottleneck indicators before chronic default occurs. 
+        Each alert specifies the triggering metric and recommended administrative review action.
+      </div>
+
+      <div class="gov-panel">
+        <div class="gov-panel-body" style="padding: 0;">
+          <div class="table-responsive">
+            <table class="gov-table" id="table-early-warnings-all">
+              <thead>
+                <tr>
+                  <th>Warning ID</th>
+                  <th>Project Name & ID</th>
+                  <th>Warning Type</th>
+                  <th>Severity</th>
+                  <th>Triggering Indicator</th>
+                  <th>System Explanation</th>
+                  <th>Recommended Review Action</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 4: ANOMALIES CENTER
+         ======================================================== -->
+    <section id="view-anomalies" class="tab-view" style="display: none;">
+      <div class="page-section-header">
+        <div>
+          <h1 class="page-section-title">Statistical & Rule-Based Anomaly Detection</h1>
+          <p class="page-section-subtitle">Outlier patterns detecting abnormal progress-expenditure relations and timeline stagnation.</p>
+        </div>
+      </div>
+
+      <!-- Mandatory PRD Disclaimer -->
+      <div class="gov-alert gov-alert-warn" style="border-left-width: 4px;">
+        <div class="gov-alert-title">Official Prototype Notice</div>
+        <strong>“Anomaly indicates an unusual pattern requiring review; it does not establish wrongdoing or data error.”</strong>
+      </div>
+
+      <div class="gov-panel">
+        <div class="gov-panel-body" style="padding: 0;">
+          <div class="table-responsive">
+            <table class="gov-table" id="table-anomalies-all">
+              <thead>
+                <tr>
+                  <th>Anomaly ID</th>
+                  <th>Project</th>
+                  <th>Anomaly Type</th>
+                  <th>Severity</th>
+                  <th>Trigger Pattern</th>
+                  <th>Description</th>
+                  <th>Recommended Administrative Verification</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 5: ANALYTICS
+         ======================================================== -->
+    <section id="view-analytics" class="tab-view" style="display: none;">
+      <div class="page-section-header">
+        <div>
+          <h1 class="page-section-title">Portfolio Analytics & Ministry Benchmarking</h1>
+          <p class="page-section-subtitle">Comparative cross-sector and cross-state risk indicators.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-row-equal">
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Average Risk Score by Line Ministry</span>
+          </div>
+          <div class="gov-panel-body">
+            <div style="height: 280px;">
+              <canvas id="chart-analytics-ministry"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Progress Gap Distribution (Financial % minus Physical %)</span>
+          </div>
+          <div class="gov-panel-body">
+            <div style="height: 280px;">
+              <canvas id="chart-analytics-gap"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gov-panel" style="margin-top: 16px;">
+        <div class="gov-panel-header">
+          <span class="gov-panel-title">Comprehensive Project Size Band Breakdown</span>
+        </div>
+        <div class="gov-panel-body" style="padding: 0;">
+          <div class="table-responsive">
+            <table class="gov-table" id="table-analytics-size-bands">
+              <thead>
+                <tr>
+                  <th>Size Band</th>
+                  <th style="text-align: center;">Project Count</th>
+                  <th style="text-align: right;">Total Sanctioned Cost</th>
+                  <th style="text-align: right;">Total Expenditure</th>
+                  <th style="text-align: center;">Avg Risk Score</th>
+                  <th style="text-align: center;">Critical Risk Projects</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 6: AI ASSISTANT (Official Helpdesk format)
+         ======================================================== -->
+    <section id="view-assistant" class="tab-view" style="display: none;">
+      <div class="page-section-header">
+        <div>
+          <h1 class="page-section-title">PAIMANA Project Intelligence Assistant</h1>
+          <p class="page-section-subtitle">Natural-language analytical query interface grounded strictly on the structured project dataset.</p>
+        </div>
+      </div>
+
+      <div class="ai-assistant-container">
+        <div class="ai-assistant-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 13px; font-weight: 700;">Government Decision-Support Query Terminal</span>
+            <span style="font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 2px;">
+              Grounded / Zero Hallucination Mode
+            </span>
+          </div>
+          <span style="font-size: 11px; color: #cbd5e1;">Connected to SQLite Analytics Engine</span>
+        </div>
+
+        <!-- Pre-Set Query Chips -->
+        <div class="ai-chips-bar">
+          <span style="font-size: 11px; font-weight: 600; color: var(--text-muted); align-self: center;">Quick Queries:</span>
+          <button class="chip-btn" data-query="Show critical-risk projects.">Show critical-risk projects</button>
+          <button class="chip-btn" data-query="Which sector has the highest average risk?">Which sector has highest average risk?</button>
+          <button class="chip-btn" data-query="Show projects above ₹1,000 crore with schedule risk.">Projects above ₹1,000 Cr with schedule risk</button>
+          <button class="chip-btn" data-query="Which projects require immediate attention?">Which projects require attention?</button>
+          <button class="chip-btn" data-query="Why is PRJ-RLY-101 high risk?">Explain risk for PRJ-RLY-101</button>
+        </div>
+
+        <!-- Chat Conversation Logs -->
+        <div class="ai-chat-logs" id="ai-chat-logs">
+          <div class="ai-msg assistant">
+            <strong>PAIMANA Project Intelligence Terminal Initialized.</strong><br>
+            Welcome to the official decision-support query desk. You may ask structured analytical questions regarding project progress, cost overruns, sector risk comparisons, or specific project explanations.
+          </div>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="ai-chat-input-row">
+          <input type="text" class="form-control" id="ai-query-input" placeholder="Enter inquiry (e.g., 'Show critical-risk projects', 'Which sector has highest risk?')...">
+          <button class="btn btn-primary" id="btn-send-ai-query">Submit Query</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 7: DATA INGESTION (CSV / XLSX & Manual Entry)
+         ======================================================== -->
+    <section id="view-upload" class="tab-view" style="display: none;">
+      <div class="page-section-header">
+        <div>
+          <h1 class="page-section-title">Data Ingestion & Dataset Validation</h1>
+          <p class="page-section-subtitle">Upload project records via CSV/XLSX or input individual records for real-time risk assessment.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-row-equal">
+        <!-- File Upload Card -->
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Upload Project Data (CSV / XLSX)</span>
+          </div>
+          <div class="gov-panel-body">
+            <div style="border: 2px dashed var(--gov-border); padding: 24px; text-align: center; border-radius: var(--radius-sm); margin-bottom: 14px; background: #ffffff;">
+              <input type="file" id="file-upload-input" accept=".csv, .xlsx, .xls" style="display: none;">
+              <p style="font-weight: 600; margin-bottom: 6px;">Select or Drag CSV / XLSX File</p>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Supported: .csv, .xlsx, .xls (max 20 MB)</p>
+              <button class="btn btn-outline" id="btn-choose-file">Select File from Computer</button>
+              <span id="selected-file-label" style="display: block; margin-top: 8px; font-weight: 600; color: var(--gov-navy);"></span>
+            </div>
+
+            <button class="btn btn-primary" id="btn-validate-upload" disabled>Validate Data</button>
+            <button class="btn btn-secondary" id="btn-download-sample-csv">Download Sample CSV Template</button>
+
+            <!-- Upload Preview Area -->
+            <div id="upload-preview-area" style="display: none; margin-top: 16px;">
+              <div class="gov-alert gov-alert-info">
+                <div class="gov-alert-title">Dataset Quality Assessment</div>
+                <div id="upload-quality-stats"></div>
+              </div>
+
+              <h4 style="font-size: 12px; margin-bottom: 6px;">Schema Column Auto-Mapping Preview:</h4>
+              <div id="upload-mapping-container" style="max-height: 180px; overflow-y: auto; margin-bottom: 12px; font-size: 11px;"></div>
+
+              <button class="btn btn-primary" id="btn-process-dataset">Process Dataset & Ingest</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manual Project Entry Form -->
+        <div class="gov-panel">
+          <div class="gov-panel-header">
+            <span class="gov-panel-title">Manual Project Record Entry</span>
+          </div>
+          <div class="gov-panel-body">
+            <form id="form-manual-project" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label class="filter-label">Project ID *</label>
+                <input type="text" class="form-control" name="project_id" required placeholder="PRJ-XYZ-001">
+              </div>
+              <div>
+                <label class="filter-label">Project Name *</label>
+                <input type="text" class="form-control" name="project_name" required placeholder="e.g. Ring Road Phase 2">
+              </div>
+              <div>
+                <label class="filter-label">Ministry *</label>
+                <input type="text" class="form-control" name="ministry" required placeholder="Ministry of Railways">
+              </div>
+              <div>
+                <label class="filter-label">Sector *</label>
+                <input type="text" class="form-control" name="sector" required placeholder="Railways / Highways / Power">
+              </div>
+              <div>
+                <label class="filter-label">State / Location *</label>
+                <input type="text" class="form-control" name="state" required placeholder="Maharashtra / UP / Gujarat">
+              </div>
+              <div>
+                <label class="filter-label">Original Sanction Cost (₹ Cr) *</label>
+                <input type="number" step="0.1" class="form-control" name="original_cost" required placeholder="1200.0">
+              </div>
+              <div>
+                <label class="filter-label">Revised / Current Cost (₹ Cr) *</label>
+                <input type="number" step="0.1" class="form-control" name="revised_cost" required placeholder="1450.0">
+              </div>
+              <div>
+                <label class="filter-label">Cumulative Expenditure (₹ Cr) *</label>
+                <input type="number" step="0.1" class="form-control" name="expenditure" required placeholder="800.0">
+              </div>
+              <div>
+                <label class="filter-label">Start Date *</label>
+                <input type="date" class="form-control" name="start_date" required value="2022-01-01">
+              </div>
+              <div>
+                <label class="filter-label">Original Target Date *</label>
+                <input type="date" class="form-control" name="original_completion_date" required value="2026-12-31">
+              </div>
+              <div>
+                <label class="filter-label">Expected Completion Date *</label>
+                <input type="date" class="form-control" name="expected_completion_date" required value="2027-06-30">
+              </div>
+              <div>
+                <label class="filter-label">Physical Progress (%) *</label>
+                <input type="number" step="0.1" min="0" max="100" class="form-control" name="physical_progress" required placeholder="45.5">
+              </div>
+              <div style="grid-column: span 2;">
+                <label class="filter-label">Financial Progress (%) *</label>
+                <input type="number" step="0.1" min="0" max="100" class="form-control" name="financial_progress" required placeholder="55.0">
+              </div>
+              <div style="grid-column: span 2; margin-top: 6px;">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Save & Run Immediate Risk Assessment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================
+       MODAL: PROJECT DRILL-DOWN & WHAT-IF SIMULATOR
+       ======================================================== -->
+  <div class="modal-overlay" id="modal-project-detail">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-project-title">Project Details & Risk Evaluation</span>
+        <button class="modal-close-btn" id="btn-close-project-modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-project-body">
+        <!-- Injected dynamically via JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-modal-close-footer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Government Footer -->
+  <footer class="gov-footer">
+    <div>
+      <strong>PAIMANA AI — Infrastructure Project Early Warning & Decision Support System</strong><br>
+      Developed for Government of India (MoSPI) • Prototype / Smart India Hackathon 2026<br>
+      <span style="color: #64748b; font-size: 10px;">
+        Notice: Prototype thresholds and synthetic records are for demonstration and decision-support modeling only.
+      </span>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
