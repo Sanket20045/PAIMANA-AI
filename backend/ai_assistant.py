@@ -190,7 +190,7 @@ def process_assistant_query(query_text: str, projects_summary: List[Dict[str, An
         avg_risk = round(sum(p["risk_report"]["overall_risk_score"] for p in projects_summary) / total, 1)
 
         answer = (
-            f"**PAIMANA Project Intelligence Overview:**\n\n"
+            f"**NIRIKSHAN Project Intelligence Overview:**\n\n"
             f"• **Monitored Projects:** {total} infrastructure assets across Indian states.\n"
             f"• **Portfolio Average Risk:** **{avg_risk} / 100**\n"
             f"• **Critical Risk Projects:** **{crit_cnt}** | **High Risk Projects:** **{high_cnt}**\n\n"

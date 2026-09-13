@@ -10,7 +10,7 @@ from backend.data_service import seed_demo_data, get_all_analyzed_projects
 
 def main():
     print("=" * 70)
-    print("PAIMANA AI - Infrastructure Project Early Warning & Decision Support System")
+    print("NIRIKSHAN AI - Intelligent Infrastructure Monitoring & Analytics")
     print("Official Prototype Platform | SIH 2026")
     print("Predict -> Explain -> Prioritize -> Recommend")
     print("=" * 70)

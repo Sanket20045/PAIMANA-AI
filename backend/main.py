@@ -23,7 +23,7 @@ from backend.ai_assistant import process_assistant_query
 from backend.export_service import export_projects_to_csv, export_projects_to_xlsx
 
 app = FastAPI(
-    title="PAIMANA AI - Infrastructure Project Early Warning & Decision Support System",
+    title="NIRIKSHAN AI - Intelligent Infrastructure Monitoring & Analytics",
     description="Prototype API for SIH 2026",
     version="1.0.0"
 )
@@ -50,7 +50,7 @@ def on_startup():
 def health_check():
     return {
         "status": "online",
-        "system": "PAIMANA AI Decision Support System",
+        "system": "NIRIKSHAN AI Decision Support System",
         "mode": "Prototype Functional Demo"
     }
 
@@ -348,7 +348,7 @@ def export_csv():
     return Response(
         content=csv_bytes,
         media_type="text/csv",
-        headers={"Content-Disposition": "attachment; filename=PAIMANA_Infrastructure_Risk_Export.csv"}
+        headers={"Content-Disposition": "attachment; filename=NIRIKSHAN_Infrastructure_Risk_Export.csv"}
     )
 
 @app.get("/api/export/xlsx")
@@ -358,7 +358,7 @@ def export_xlsx():
     return Response(
         content=xlsx_bytes,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        headers={"Content-Disposition": "attachment; filename=PAIMANA_Infrastructure_Risk_Export.xlsx"}
+        headers={"Content-Disposition": "attachment; filename=NIRIKSHAN_Infrastructure_Risk_Export.xlsx"}
     )
 
 # Serve Frontend static assets
